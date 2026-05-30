@@ -16,7 +16,7 @@ export default function AdminPage() {
     if (isSubmitting) return
     setIsSubmitting(true)
 
-    // Generamos el slug a partir de tu título
+    // Generamos el slug limpio a partir de tu título
     const slug = title
       .toLowerCase()
       .trim()
@@ -24,31 +24,37 @@ export default function AdminPage() {
       .replace(/(^-|-$)+/g, '')
 
     try {
+      // Realizamos la petición HTTP POST a la API local
       const res = await fetch('/api/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, slug, content, category }),
       })
 
+      // DIAGNÓSTICO INTERACTIVO: Analizamos la respuesta del servidor
       if (res.ok) {
-        // Primero refrescamos el árbol del Server Component para forzar la lectura de Neon DB
-        router.refresh()
-        // Luego redirigimos al home, garantizando que el nuevo apunte se dibuje abajo
+        alert('¡Éxito! Apunte guardado correctamente en Neon DB.')
+        
+        // Primero refrescamos para forzar la re-lectura de la base de datos en la main page
+        await router.refresh()
+        
+        // Luego redirigimos al inicio de la bitácora
         router.push('/')
       } else {
-        alert('Hubo un problema al guardar en la base de datos.')
+        // Si el backend responde con un código de error (ej: 400 o 500)
+        const errorData = await res.json().catch(() => ({}));
+        alert(`Error del servidor: ${errorData.error || 'No se pudo registrar en la base de datos. Verifica tu backend.'}`)
         setIsSubmitting(false)
       }
     } catch (error) {
       console.error(error)
-      alert('Error de conexión con el servidor.')
+      alert('Error de red: No se pudo establecer comunicación con el endpoint /api/posts')
       setIsSubmitting(false)
     }
   }
 
   // Función para cerrar sesión de administrador de forma manual
   const handleLogout = async () => {
-    // Para borrar la cookie de sesión, llamamos a un endpoint de salida o la expiramos
     document.cookie = "admin_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
     router.refresh()
     router.push('/')
@@ -57,7 +63,7 @@ export default function AdminPage() {
   return (
     <main style={{ backgroundColor: '#0a0d14', minHeight: '100vh', color: '#fff', padding: '3rem 2rem', fontFamily: 'system-ui, sans-serif', position: 'relative' }}>
       
-      {/* Botón de control de salida para el Administrador */}
+      {/* Botón de control de salida para el Admin */}
       <div style={{ maxWidth: '600px', margin: '0 auto 1.5rem auto', display: 'flex', justifyContent: 'flex-end' }}>
         <button 
           onClick={handleLogout}
