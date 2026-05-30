@@ -1,17 +1,15 @@
 // app/page.tsx
 import { prisma } from '../lib/prisma'
 import Link from 'next/link'
-import TabNavigator from './components/TabNavigator/TabNavigator' // ⬅️ RUTA CORREGIDA AQUÍ
+import TabNavigator from './components/TabNavigator/TabNavigator' // ⬅️ IMPORTACIÓN CORREGIDA
 
 export default async function HomePage() {
-  // Solicitamos todos los apuntes guardados en la base de datos de Neon
   const posts = await prisma.post.findMany({
     orderBy: { createdAt: 'desc' },
   })
 
   return (
     <main style={{ backgroundColor: '#0a0d14', minHeight: '100vh', color: '#fff', fontFamily: 'system-ui, sans-serif' }}>
-      {/* Encabezado Principal */}
       <header style={{ textAlign: 'center', padding: '3rem 2rem 1rem 2rem' }}>
         <p style={{ color: '#ff6e00', fontSize: '0.85rem', letterSpacing: '2px', fontWeight: 'bold', margin: 0 }}>
           INSTITUTO SUPERIOR TECNOLÓGICO YAVIRAC
@@ -27,14 +25,12 @@ export default async function HomePage() {
         </p>
       </header>
 
-      {/* Botón superior para ir al formulario de creación */}
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem', display: 'flex', justifyContent: 'flex-end' }}>
-        <Link href="/admin" style={{ backgroundColor: '#ff6e00', color: '#fff', padding: '0.6rem 1.3rem', borderRadius: '8px', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 'bold', transition: 'background 0.2s' }}>
+        <Link href="/admin" style={{ backgroundColor: '#ff6e00', color: '#fff', padding: '0.6rem 1.3rem', borderRadius: '8px', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 'bold' }}>
           Nueva Publicación
         </Link>
       </div>
 
-      {/* Componente dinámico de pestañas pasándole la lista original de Neon DB */}
       <TabNavigator initialPosts={posts} />
     </main>
   )
