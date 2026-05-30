@@ -24,7 +24,7 @@ export default async function HomePage() {
             <p>¡Haz clic en "Nueva Publicación" arriba para estrenar tu blog!</p>
           </div>
         ) : (
-          posts.map((post) => (
+          posts.map((post: any) => (
             <article key={post.id} style={{ marginBottom: '2.5rem', border: '1px solid #eaeaea', padding: '1.5rem', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
               {post.imageUrl && (
                 <img src={post.imageUrl} alt={post.title} style={{ width: '100%', maxHeight: '350px', objectFit: 'cover', borderRadius: '6px', marginBottom: '1rem' }} />
