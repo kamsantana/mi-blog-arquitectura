@@ -1,8 +1,7 @@
 // app/api/posts/route.ts
-import { prisma } from '../../../lib/prisma' // Sube dos niveles para buscar la carpeta lib en la raíz
+import { prisma } from '../../../lib/prisma' // Sube 3 niveles exactos hasta la raíz
 import { NextResponse } from 'next/server'
 
-// Guarda el apunte que viene desde el formulario administrador
 export async function POST(request: Request) {
   try {
     const { title, slug, content, category } = await request.json()
@@ -18,7 +17,7 @@ export async function POST(request: Request) {
     
     return NextResponse.json(post)
   } catch (error) {
-    console.error("Error en POST:", error)
+    console.error("Error en base de datos:", error)
     return NextResponse.json({ error: "Error al crear la publicación" }, { status: 500 })
   }
 }

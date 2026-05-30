@@ -1,35 +1,40 @@
 // app/page.tsx
-import { prisma } from '../lib/prisma' // Sube un nivel para buscar la carpeta lib en la raíz
+import { prisma } from '../lib/prisma'
 import Link from 'next/link'
-import TabNavigator from './components/TabNavigator/TabNavigator' // Ruta exacta corregida (un solo punto)
+import TabNavigator from './components/TabNavigator/TabNavigator' // ⬅️ RUTA CORREGIDA AQUÍ
 
 export default async function HomePage() {
-  // Solicitamos los apuntes guardados en la base de datos de Neon
+  // Solicitamos todos los apuntes guardados en la base de datos de Neon
   const posts = await prisma.post.findMany({
     orderBy: { createdAt: 'desc' },
   })
 
   return (
-    <main style={{ backgroundColor: '#0a0d14', minHeight: '100vh', color: '#fff', fontFamily: 'system-ui, sans-serif', paddingBottom: '4rem' }}>
-      <header style={{ textAlign: 'center', padding: '3rem 2rem 2rem 2rem' }}>
+    <main style={{ backgroundColor: '#0a0d14', minHeight: '100vh', color: '#fff', fontFamily: 'system-ui, sans-serif' }}>
+      {/* Encabezado Principal */}
+      <header style={{ textAlign: 'center', padding: '3rem 2rem 1rem 2rem' }}>
         <p style={{ color: '#ff6e00', fontSize: '0.85rem', letterSpacing: '2px', fontWeight: 'bold', margin: 0 }}>
           INSTITUTO SUPERIOR TECNOLÓGICO YAVIRAC
         </p>
-        <p style={{ color: '#8a99ad', fontSize: '0.75rem', letterSpacing: '1px', margin: '0.3rem 0 1rem 0' }}>
+        <p style={{ color: '#718096', fontSize: '0.75rem', marginTop: '0.2rem' }}>
           DESARROLLO DE SOFTWARE
         </p>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: '800', margin: 0 }}>BITÁCORA DE SOFTWARE</h1>
-        <p style={{ color: '#4a5568', fontSize: '0.7rem', margin: '0.5rem 0 0 0' }}>ELABORADO POR BSNQ</p>
+        <h1 style={{ fontSize: '3rem', fontWeight: '900', margin: '1rem 0 0.5rem 0', letterSpacing: '-1px' }}>
+          BITÁCORA DE SOFTWARE
+        </h1>
+        <p style={{ color: '#4a5568', fontSize: '0.8rem', margin: 0 }}>
+          ELABORADO POR BSNQ
+        </p>
       </header>
 
-      {/* Botón para navegar a la sección de administración */}
+      {/* Botón superior para ir al formulario de creación */}
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem', display: 'flex', justifyContent: 'flex-end' }}>
-        <Link href="/admin" style={{ background: '#ff6e00', color: 'white', padding: '0.5rem 1rem', borderRadius: '6px', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 'bold' }}>
+        <Link href="/admin" style={{ backgroundColor: '#ff6e00', color: '#fff', padding: '0.6rem 1.3rem', borderRadius: '8px', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 'bold', transition: 'background 0.2s' }}>
           Nueva Publicación
         </Link>
       </div>
 
-      {/* Enviamos los datos dinámicos al componente interactivo para las pestañas */}
+      {/* Componente dinámico de pestañas pasándole la lista original de Neon DB */}
       <TabNavigator initialPosts={posts} />
     </main>
   )
