@@ -1,12 +1,25 @@
 // app/page.tsx
 import { prisma } from '../lib/prisma'
 import Link from 'next/link'
-import TabNavigator from './components/TabNavigator/TabNavigator' // ⬅️ IMPORTACIÓN CORREGIDA
+import TabNavigator from './components/TabNavigator/TabNavigator'
+
+export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
-  const posts = await prisma.post.findMany({
+  // Traemos los posts de la base de datos
+  const rawPosts = await prisma.post.findMany({
     orderBy: { createdAt: 'desc' },
   })
+
+  // 🛠️ MAPEAMOS LOS POSTS: Convertimos las fechas a texto para que TypeScript no chille
+  const posts = rawPosts.map((post: any) => ({
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    content: post.content,
+    category: post.category || 'ARQUITECTURA',
+    createdAt: post.createdAt ? new Date(post.createdAt).toISOString() : '',
+  }))
 
   return (
     <main style={{ backgroundColor: '#0a0d14', minHeight: '100vh', color: '#fff', fontFamily: 'system-ui, sans-serif' }}>
