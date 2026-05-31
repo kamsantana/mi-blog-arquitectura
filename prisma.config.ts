@@ -1,12 +1,8 @@
-// prisma.config.ts
-import { defineConfig } from '@prisma/config'
-import * as dotenv from 'dotenv'
-
-// 👈 Esto carga las variables de tu archivo .env en process.env
-dotenv.config() 
+import { defineConfig } from '@prisma/config';
 
 export default defineConfig({
+  schema: './prisma/schema.prisma',
   datasource: {
-    url: process.env.DATABASE_URL,
+    url: process.env.DATABASE_URL, // 👈 Prisma 7 lee la base de datos de Neon desde aquí
   },
-})
+});

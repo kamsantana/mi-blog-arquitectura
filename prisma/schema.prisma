@@ -1,8 +1,7 @@
 // prisma/schema.prisma
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL") // Asegúrate de tener esta línea para que conecte a Neon
+  provider = "postgresql" // 👈 Conservamos únicamente el proveedor de base de datos
 }
 
 generator client {
@@ -20,7 +19,7 @@ model Post {
   title     String   
   slug      String   @unique              
   content   String   
-  category  String   @default("ARQUITECTURA") // 🛠️ ¡AGREGA ESTA LÍNEA AQUÍ!
+  category  String   @default("ARQUITECTURA")
   imageUrl  String?  
   createdAt DateTime @default(now())     
 }
