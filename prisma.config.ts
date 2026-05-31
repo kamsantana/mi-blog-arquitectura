@@ -3,7 +3,7 @@ import { defineConfig } from '@prisma/config'
 
 export default defineConfig({
   datasource: {
-    // Aquí es donde Prisma 7 busca la URL de tu base de datos Neon en Vercel
-    url: process.env.DATABASE_URL, 
+    // Busca la variable en el entorno de Vercel o en el archivo de desarrollo local
+    url: process.env.DATABASE_URL || process.env.NEXT_PUBLIC_DATABASE_URL, 
   },
 })
