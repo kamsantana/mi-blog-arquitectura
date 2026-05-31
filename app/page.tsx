@@ -21,80 +21,168 @@ export default async function HomePage() {
 
   return (
     <main style={{ 
-      backgroundColor: '#070B14', 
+      backgroundColor: '#0F172A', // Azul marino profundo de fondo
       minHeight: '100vh', 
       color: '#F8FAFC', 
       fontFamily: '"Outfit", sans-serif',
       position: 'relative',
-      overflowX: 'hidden'
+      overflowX: 'hidden',
+      padding: '20px'
     }}>
       
-      {/* CAPAS DE DISEÑO DE FONDO (AURORAS Y LUCES NEÓN) */}
-      <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100vw', height: '100vw', background: 'radial-gradient(circle, rgba(255,85,0,0.06) 0%, transparent 60%)', zIndex: 0, pointerEvents: 'none' }} />
-      <div style={{ position: 'fixed', borderRadius: '50%', filter: 'blur(140px)', opacity: 0.12, zIndex: 0, pointerEvents: 'none', backgroundColor: '#FF5500', width: '40vw', height: '40vw', top: '-10vh', left: '-10vw' }} />
-      <div style={{ position: 'fixed', borderRadius: '50%', filter: 'blur(140px)', opacity: 0.12, zIndex: 0, pointerEvents: 'none', backgroundColor: '#FF5500', width: '30vw', height: '30vw', bottom: '-10vh', right: '-10vw' }} />
+      {/* BARRA DE NAVEGACIÓN SUPERIOR PREMIUM */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        background: 'rgba(30, 41, 59, 0.5)',
+        backdropFilter: 'blur(12px)',
+        border: '1px solid rgba(255, 255, 255, 0.05)',
+        borderRadius: '16px',
+        padding: '12px 24px',
+        marginBottom: '24px',
+        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)'
+      }}>
+        {/* LOGO E INSTITUCIÓN */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ 
+            backgroundColor: '#10B981', 
+            width: '32px', 
+            height: '32px', 
+            borderRadius: '8px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            fontWeight: 'bold',
+            color: '#0F172A'
+          }}>Y</div>
+          <div>
+            <div style={{ fontSize: '14px', fontWeight: 700, letterSpacing: '0.5px' }}>IST YAVIRAC</div>
+            <div style={{ fontSize: '11px', color: '#10B981', fontWeight: 600 }}>DESARROLLO DE SOFTWARE</div>
+          </div>
+        </div>
 
-      {/* INTERFAZ BENTO GRID */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '24px', minHeight: '100vh', boxSizing: 'border-box', position: 'relative', zIndex: 1 }}>
-        
-        {/* PANEL PRINCIPAL CONTENEDOR */}
-        <div style={{ 
-          flexGrow: 1, 
-          display: 'flex', 
-          flexDirection: 'column', 
-          overflow: 'hidden', 
-          background: 'rgba(16, 24, 43, 0.4)', 
-          backdropFilter: 'blur(25px)', 
-          WebkitBackdropFilter: 'blur(25px)',
-          border: '1px solid rgba(255, 255, 255, 0.04)', 
-          borderRadius: '20px', 
-          boxShadow: '0 15px 40px rgba(0, 0, 0, 0.6)' 
-        }}>
-          
-          {/* ENCABEZADO CON MARCA DE AGUA */}
-          <header style={{ 
-            padding: '45px 40px', 
-            textAlign: 'center', 
-            position: 'relative', 
-            borderBottom: '1px solid rgba(255,255,255,0.05)',
-            backgroundColor: '#070B14',
-            overflow: 'hidden'
+        {/* MENÚ DE ACCIONES */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <span style={{ fontSize: '12px', color: '#94A3B8', fontWeight: 500, letterSpacing: '1px' }}>
+            ELABORADO POR BSNQ
+          </span>
+          <Link href="/admin" style={{ 
+            backgroundColor: 'transparent', 
+            color: '#F43F5E', 
+            border: '1px solid rgba(244, 63, 94, 0.3)',
+            padding: '8px 16px', 
+            borderRadius: '10px', 
+            textDecoration: 'none', 
+            fontSize: '12px', 
+            fontWeight: '700',
+            transition: '0.3s'
           }}>
-            <h2 style={{ fontSize: '16px', letterSpacing: '5px', color: '#F8FAFC', textTransform: 'uppercase', margin: '0 0 8px 0', fontWeight: 700 }}>
-              INSTITUTO SUPERIOR TECNOLÓGICO YAVIRAC
-            </h2>
-            <div style={{ fontSize: '13px', letterSpacing: '5px', color: '#FF5500', textTransform: 'uppercase', margin: '0 0 8px 0', fontWeight: 800, textShadow: '0 0 15px rgba(255, 85, 0, 0.4)' }}>
-              DESARROLLO DE SOFTWARE
-            </div>
-            <h1 style={{ fontSize: '36px', fontWeight: 800, margin: 0, color: '#FFF', letterSpacing: '-0.5px' }}>
-              BITÁCORA DE SOFTWARE
-            </h1>
-            <div style={{ display: 'inline-block', fontSize: '10px', color: 'rgba(255,255,255,0.3)', marginTop: '8px', letterSpacing: '3px', textTransform: 'uppercase' }}>
-              ELABORADO POR BSNQ
-            </div>
-          </header>
+            ⚙️ Panel Control
+          </Link>
+        </div>
+      </div>
 
-          {/* BOTÓN DE CREACIÓN FLOTANTE / ALINEADO */}
-          <div style={{ padding: '20px 40px 0', display: 'flex', justifyContent: 'flex-end' }}>
-            <Link href="/admin" style={{ 
-              backgroundColor: '#FF5500', 
-              color: '#000', 
-              padding: '10px 20px', 
-              borderRadius: '10px', 
-              textDecoration: 'none', 
-              fontSize: '13px', 
-              fontWeight: '800',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              transition: '0.3s'
+      {/* DISEÑO BENTO GRID ASIMÉTRICO (DOS COLUMNAS) */}
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: '2fr 1fr', 
+        gap: '24px', 
+        boxSizing: 'border-box',
+        alignItems: 'start'
+      }}>
+        
+        {/* COLUMNA IZQUIERDA: CONTENEDOR DE LA BITÁCORA DINÁMICA */}
+        <div style={{ 
+          background: 'rgba(15, 23, 42, 0.6)', 
+          border: '2px solid #10B981', // Borde característico Verde Esmeralda
+          borderRadius: '24px', 
+          padding: '30px',
+          boxShadow: '0 20px 40px rgba(16, 185, 129, 0.05)',
+          minHeight: '65vh'
+        }}>
+          {/* IDENTIFICADOR DE SECCIÓN */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <h1 style={{ fontSize: '28px', fontWeight: 800, margin: 0, letterSpacing: '-0.5px', color: '#FFF' }}>
+              Bitácora de Publicaciones
+            </h1>
+            <span style={{ 
+              backgroundColor: 'rgba(16, 185, 129, 0.1)', 
+              color: '#10B981', 
+              padding: '6px 12px', 
+              borderRadius: '20px', 
+              fontSize: '11px', 
+              fontWeight: 700 
             }}>
-              ⚙️ Nueva Publicación
-            </Link>
+              ● En Línea
+            </span>
           </div>
 
-          {/* COMPONENTE DE NAVEGACIÓN (TIMELINE DINÁMICO) */}
+          {/* COMPONENTE INTERACTIVO (Maneja el filtrado de Arquitectura/Calidad interno) */}
           <TabNavigator initialPosts={posts} />
         </div>
+
+        {/* COLUMNA DERECHA: PANEL DE HISTORIAL E INFORMACIÓN INSTITUCIONAL */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          
+          {/* TARJETA DE RESUMEN RÁPIDO */}
+          <div style={{
+            background: 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            borderRadius: '20px',
+            padding: '24px',
+          }}>
+            <h3 style={{ fontSize: '14px', color: '#EA580C', fontWeight: 700, margin: '0 0 16px 0', letterSpacing: '1px', textTransform: 'uppercase' }}>
+              Índice de Contenidos
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {posts.slice(0, 4).map((p) => (
+                <div key={p.id} style={{ paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
+                  <div style={{ fontSize: '13px', fontWeight: 600, color: '#F1F5F9' }}>{p.title}</div>
+                  <div style={{ fontSize: '11px', color: '#64748B', textTransform: 'uppercase' }}>{p.category.replace('_', ' ')}</div>
+                </div>
+              ))}
+              {posts.length === 0 && (
+                <div style={{ fontSize: '13px', color: '#64748B' }}>No hay registros guardados.</div>
+              )}
+            </div>
+          </div>
+
+          {/* TARJETA MARCA DE AGUA CORPORATIVA */}
+          <div style={{
+            background: 'rgba(30, 41, 59, 0.2)',
+            border: '1px solid rgba(255, 255, 255, 0.03)',
+            borderRadius: '20px',
+            padding: '30px',
+            textAlign: 'center',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            <div style={{
+              fontSize: '65px',
+              fontWeight: 900,
+              color: 'rgba(255, 255, 255, 0.01)',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              whiteSpace: 'nowrap',
+              pointerEvents: 'none'
+            }}>
+              YAVIRAC
+            </div>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <div style={{ fontSize: '11px', color: '#94A3B8', letterSpacing: '3px', marginBottom: '6px' }}>
+                EDUCACIÓN SUPERIOR
+              </div>
+              <div style={{ fontSize: '15px', fontWeight: 700, color: '#EA580C', letterSpacing: '1px' }}>
+                TECNOLÓGICO YAVIRAC
+              </div>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </main>
   )
