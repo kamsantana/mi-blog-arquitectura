@@ -6,10 +6,12 @@ import TabNavigator from './components/TabNavigator/TabNavigator'
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
+  // Obtener los datos desde Neon DB
   const rawPosts = await prisma.post.findMany({
     orderBy: { createdAt: 'desc' },
   })
 
+  // Mapeo seguro asegurando consistencia en fechas y categorías
   const posts = rawPosts.map((post: any) => ({
     id: post.id,
     title: post.title,
@@ -20,146 +22,178 @@ export default async function HomePage() {
   }))
 
   return (
-    <main style={{ 
-      backgroundColor: '#0F172A', // Azul marino profundo de fondo
+    <div style={{ 
+      backgroundColor: '#0F172A', 
       minHeight: '100vh', 
-      color: '#F8FAFC', 
-      fontFamily: '"Outfit", sans-serif',
-      position: 'relative',
-      overflowX: 'hidden',
-      padding: '20px'
+      width: '100%',
+      padding: '24px',
+      boxSizing: 'border-box'
     }}>
       
-      {/* BARRA DE NAVEGACIÓN SUPERIOR PREMIUM */}
-      <div style={{
+      {/* 1. BARRA DE NAVEGACIÓN SUPERIOR */}
+      <header style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        background: 'rgba(30, 41, 59, 0.5)',
-        backdropFilter: 'blur(12px)',
+        background: '#1E293B',
         border: '1px solid rgba(255, 255, 255, 0.05)',
-        borderRadius: '16px',
-        padding: '12px 24px',
+        borderRadius: '12px',
+        padding: '14px 24px',
         marginBottom: '24px',
-        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)'
+        width: '100%',
+        boxSizing: 'border-box'
       }}>
-        {/* LOGO E INSTITUCIÓN */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        {/* LADO IZQUIERDO: LOGO INSTITUCIONAL */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <div style={{ 
             backgroundColor: '#10B981', 
-            width: '32px', 
-            height: '32px', 
+            width: '36px', 
+            height: '36px', 
             borderRadius: '8px', 
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center',
-            fontWeight: 'bold',
-            color: '#0F172A'
-          }}>Y</div>
-          <div>
-            <div style={{ fontSize: '14px', fontWeight: 700, letterSpacing: '0.5px' }}>IST YAVIRAC</div>
-            <div style={{ fontSize: '11px', color: '#10B981', fontWeight: 600 }}>DESARROLLO DE SOFTWARE</div>
+            fontWeight: 800,
+            color: '#0F172A',
+            fontSize: '16px'
+          }}>
+            Y
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            <span style={{ fontSize: '14px', fontWeight: 700, letterSpacing: '0.5px', color: '#FFFFFF' }}>
+              IST YAVIRAC
+            </span>
+            <span style={{ fontSize: '10px', color: '#10B981', fontWeight: 700, letterSpacing: '0.5px' }}>
+              DESARROLLO DE SOFTWARE
+            </span>
           </div>
         </div>
 
-        {/* MENÚ DE ACCIONES */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <span style={{ fontSize: '12px', color: '#94A3B8', fontWeight: 500, letterSpacing: '1px' }}>
+        {/* LADO DERECHO: AUTOR Y ACCESO */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <span style={{ fontSize: '11px', color: '#94A3B8', fontWeight: 600, letterSpacing: '1px' }}>
             ELABORADO POR BSNQ
           </span>
           <Link href="/admin" style={{ 
             backgroundColor: 'transparent', 
             color: '#F43F5E', 
-            border: '1px solid rgba(244, 63, 94, 0.3)',
+            border: '1px solid rgba(244, 63, 94, 0.4)',
             padding: '8px 16px', 
-            borderRadius: '10px', 
+            borderRadius: '8px', 
             textDecoration: 'none', 
             fontSize: '12px', 
-            fontWeight: '700',
-            transition: '0.3s'
+            fontWeight: 700,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
           }}>
             ⚙️ Panel Control
           </Link>
         </div>
-      </div>
+      </header>
 
-      {/* DISEÑO BENTO GRID ASIMÉTRICO (DOS COLUMNAS) */}
+      {/* 2. AREA DE CONTENIDO EN BENTO GRID (Dos Columnas Asimétricas) */}
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: '2fr 1fr', 
+        gridTemplateColumns: '2.2fr 1fr', 
         gap: '24px', 
+        width: '100%',
         boxSizing: 'border-box',
         alignItems: 'start'
       }}>
         
-        {/* COLUMNA IZQUIERDA: CONTENEDOR DE LA BITÁCORA DINÁMICA */}
-        <div style={{ 
-          background: 'rgba(15, 23, 42, 0.6)', 
-          border: '2px solid #10B981', // Borde característico Verde Esmeralda
-          borderRadius: '24px', 
-          padding: '30px',
-          boxShadow: '0 20px 40px rgba(16, 185, 129, 0.05)',
-          minHeight: '65vh'
+        {/* PANEL PRINCIPAL IZQUIERDO: CONTENEDOR DE PUBLICACIONES */}
+        <section style={{ 
+          background: 'rgba(30, 41, 59, 0.3)', 
+          border: '2px solid #10B981', /* El representativo borde verde esmeralda */
+          borderRadius: '20px', 
+          padding: '28px',
+          boxSizing: 'border-box',
+          boxShadow: '0 10px 30px rgba(16, 185, 129, 0.02)'
         }}>
-          {/* IDENTIFICADOR DE SECCIÓN */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-            <h1 style={{ fontSize: '28px', fontWeight: 800, margin: 0, letterSpacing: '-0.5px', color: '#FFF' }}>
+          {/* Encabezado del panel */}
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            marginBottom: '28px',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+            paddingBottom: '16px'
+          }}>
+            <h1 style={{ fontSize: '26px', fontWeight: 800, margin: 0, color: '#FFFFFF', letterSpacing: '-0.5px' }}>
               Bitácora de Publicaciones
             </h1>
-            <span style={{ 
-              backgroundColor: 'rgba(16, 185, 129, 0.1)', 
-              color: '#10B981', 
-              padding: '6px 12px', 
-              borderRadius: '20px', 
-              fontSize: '11px', 
-              fontWeight: 700 
-            }}>
-              ● En Línea
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ width: '8px', height: '8px', backgroundColor: '#10B981', borderRadius: '50%' }}></span>
+              <span style={{ color: '#10B981', fontSize: '11px', fontWeight: 700, letterSpacing: '0.5px' }}>
+                En Línea
+              </span>
+            </div>
           </div>
 
-          {/* COMPONENTE INTERACTIVO (Maneja el filtrado de Arquitectura/Calidad interno) */}
+          {/* Renderizado de las pestañas internas y las tarjetas de posts */}
           <TabNavigator initialPosts={posts} />
-        </div>
+        </section>
 
-        {/* COLUMNA DERECHA: PANEL DE HISTORIAL E INFORMACIÓN INSTITUCIONAL */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        {/* PANEL SECUNDARIO DERECHO: COLUMNA DE INFORMACIÓN */}
+        <aside style={{ display: 'flex', flexDirection: 'column', gap: '24px', boxSizing: 'border-box' }}>
           
-          {/* TARJETA DE RESUMEN RÁPIDO */}
+          {/* BLOQUE: ÍNDICE DE CONTENIDOS */}
           <div style={{
-            background: 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)',
+            background: '#1E293B',
             border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '20px',
+            borderRadius: '16px',
             padding: '24px',
+            boxSizing: 'border-box'
           }}>
-            <h3 style={{ fontSize: '14px', color: '#EA580C', fontWeight: 700, margin: '0 0 16px 0', letterSpacing: '1px', textTransform: 'uppercase' }}>
+            <h3 style={{ 
+              fontSize: '13px', 
+              color: '#EA580C', /* Tonalidad cobre/naranja del diseño */
+              fontWeight: 700, 
+              margin: '0 0 16px 0', 
+              letterSpacing: '1px', 
+              textTransform: 'uppercase' 
+            }}>
               Índice de Contenidos
             </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {posts.slice(0, 4).map((p) => (
-                <div key={p.id} style={{ paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
-                  <div style={{ fontSize: '13px', fontWeight: 600, color: '#F1F5F9' }}>{p.title}</div>
-                  <div style={{ fontSize: '11px', color: '#64748B', textTransform: 'uppercase' }}>{p.category.replace('_', ' ')}</div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {posts.slice(0, 5).map((p) => (
+                <div key={p.id} style={{ 
+                  paddingBottom: '12px', 
+                  borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px'
+                }}>
+                  <span style={{ fontSize: '13px', fontWeight: 600, color: '#E2E8F0' }}>
+                    {p.title}
+                  </span>
+                  <span style={{ fontSize: '10px', color: '#64748B', fontWeight: 700, letterSpacing: '0.5px' }}>
+                    {p.category.replace('_', ' ')}
+                  </span>
                 </div>
               ))}
               {posts.length === 0 && (
-                <div style={{ fontSize: '13px', color: '#64748B' }}>No hay registros guardados.</div>
+                <span style={{ fontSize: '13px', color: '#64748B' }}>Ninguna publicación registrada aún.</span>
               )}
             </div>
           </div>
 
-          {/* TARJETA MARCA DE AGUA CORPORATIVA */}
+          {/* BLOQUE: SELLO O IDENTIFICACIÓN INSTITUCIONAL */}
           <div style={{
             background: 'rgba(30, 41, 59, 0.2)',
-            border: '1px solid rgba(255, 255, 255, 0.03)',
-            borderRadius: '20px',
-            padding: '30px',
+            border: '1px solid rgba(255, 255, 255, 0.02)',
+            borderRadius: '16px',
+            padding: '28px',
             textAlign: 'center',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            boxSizing: 'border-box'
           }}>
+            {/* Texto gigante de fondo difuminado imitando una marca de agua */}
             <div style={{
-              fontSize: '65px',
+              fontSize: '52px',
               fontWeight: 900,
               color: 'rgba(255, 255, 255, 0.01)',
               position: 'absolute',
@@ -167,23 +201,25 @@ export default async function HomePage() {
               left: '50%',
               transform: 'translate(-50%, -50%)',
               whiteSpace: 'nowrap',
-              pointerEvents: 'none'
+              pointerEvents: 'none',
+              letterSpacing: '4px'
             }}>
               YAVIRAC
             </div>
+            
             <div style={{ position: 'relative', zIndex: 1 }}>
-              <div style={{ fontSize: '11px', color: '#94A3B8', letterSpacing: '3px', marginBottom: '6px' }}>
+              <div style={{ fontSize: '10px', color: '#64748B', letterSpacing: '3px', fontWeight: 600, marginBottom: '4px' }}>
                 EDUCACIÓN SUPERIOR
               </div>
-              <div style={{ fontSize: '15px', fontWeight: 700, color: '#EA580C', letterSpacing: '1px' }}>
+              <div style={{ fontSize: '14px', fontWeight: 700, color: '#EA580C', letterSpacing: '0.5px' }}>
                 TECNOLÓGICO YAVIRAC
               </div>
             </div>
           </div>
 
-        </div>
+        </aside>
 
       </div>
-    </main>
+    </div>
   )
 }
