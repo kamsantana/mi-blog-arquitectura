@@ -1,8 +1,9 @@
-import { defineConfig } from '@prisma/config';
+// prisma.config.ts
+import { defineConfig } from '@prisma/config'
 
 export default defineConfig({
-  schema: './prisma/schema.prisma',
   datasource: {
-    url: process.env.DATABASE_URL, // 👈 Prisma 7 lee la base de datos de Neon desde aquí
+    // Aquí es donde Prisma 7 busca la URL de tu base de datos Neon en Vercel
+    url: process.env.DATABASE_URL, 
   },
-});
+})

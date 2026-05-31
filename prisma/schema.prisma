@@ -1,7 +1,8 @@
 // prisma/schema.prisma
 
 datasource db {
-  provider = "postgresql" // 👈 Conservamos únicamente el proveedor de base de datos
+  provider = "postgresql"
+  // 💡 En Prisma 7 la URL ya no se pone aquí, se maneja en prisma.config.ts
 }
 
 generator client {
